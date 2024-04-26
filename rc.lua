@@ -77,7 +77,7 @@ local editor = os.getenv("EDITOR") or "nvim"
 local browser = "brave-browser"
 
 awful.util.terminal = terminal
-awful.util.tagnames = { " code", " web", "󰭻 chat", "󰙨 test", "󰎄 music" }
+awful.util.tagnames = { " Code", " Web", "󰭻 Chat", "󰙨 Test", "󰎄 Music", " Other" }
 awful.layout.layouts = {
 	awful.layout.suit.floating,
 	awful.layout.suit.tile,
@@ -275,7 +275,7 @@ globalkeys = mytable.join(
 
 	-- X screen locker
 	awful.key({ altkey, "Control" }, "l", function()
-		os.execute(scrlocker)
+		os.execute("i3lock -e -i ~/Pictures/wallpapers/lockscreen.png")
 	end, { description = "lock screen", group = "hotkeys" }),
 
 	-- Show help
