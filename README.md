@@ -13,6 +13,8 @@ There will soon be an installation script for all this that I should test, but u
 - `brightnessctl`
 - `amixer`
 - `arandr` or `xrandr` if you prefer the command line
+- `evolution` || calendar widget
+- `nitrogen` || wallpaper
 - `A nerd font of your choice, if you install JetBrainsMono Nerd Font it should work out of the box`
 
 You can install these packages with the following command:
@@ -24,3 +26,7 @@ sudo <package_manager_install_command> awesome alacritty rofi blueman pavucontro
 
 ## IMPORTANT
 Keep in mind that this was only tested on Ubuntu and Fedora, each on their latest versions.
+
+## Next Steps
+- [ ] Create an installation script
+- [ ] Test the installation script

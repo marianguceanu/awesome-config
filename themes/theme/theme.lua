@@ -5,25 +5,27 @@ local wibox = require("wibox")
 local dpi = require("beautiful.xresources").apply_dpi
 
 local os = os
-local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
+local my_table = awful.util.table or gears.table
 
 local theme = {}
-theme.zenburn_dir = require("awful.util").get_themes_dir() .. "zenburn"
-theme.dir = os.getenv("HOME") .. "~/.config/awesome/themes/steamburn"
+theme.zenburn_dir = require("awful.util").get_themes_dir() .. "theme"
+theme.dir = os.getenv("HOME") .. "~/.config/awesome/themes/theme"
 theme.font = "JetBrainsMono Nerd Font 14"
-theme.fg_normal = "#00BDFF"
+theme.fg_normal = "#ae5cc4"
 theme.fg_focus = "#d88166"
 theme.fg_urgent = "#CC9393"
 theme.bg_normal = "#000000"
-theme.bg_focus = "#140c0b"
+theme.bg_focus = "#0F0F0F"
 theme.bg_urgent = "#2a1f1e"
 theme.border_width = dpi(1)
 theme.border_normal = "#302627"
 theme.border_focus = "#c2745b"
 theme.border_marked = "#CC9393"
 theme.taglist_fg_focus = "#d88166"
-theme.tasklist_bg_focus = "#140c0b"
-theme.tasklist_fg_focus = "#C500FF"
+theme.tasklist_bg_focus = "#1c2024"
+theme.tasklist_bg_normal = "#0F0F0F"
+theme.tasklist_fg_focus = "#d88166"
+theme.tasklist_fg_normal = "#d88166"
 theme.taglist_squares_sel = theme.dir .. "/icons/square_sel.png"
 theme.taglist_squares_unsel = theme.dir .. "/icons/square_unsel.png"
 theme.menu_height = dpi(16)
@@ -61,51 +63,36 @@ mytextclock.font = theme.font
 theme.cal = lain.widget.cal({
 	attach_to = { mytextclock },
 	notification_preset = {
-		font = "Terminus 11",
+		font = theme.font,
 		fg = theme.fg_normal,
 		bg = theme.bg_normal,
 	},
 })
 
--- MPD
-theme.mpd = lain.widget.mpd({
-	settings = function()
-		artist = mpd_now.artist .. " "
-		title = mpd_now.title .. " "
-
-		if mpd_now.state == "pause" then
-			artist = "mpd "
-			title = "paused "
-		elseif mpd_now.state == "stop" then
-			artist = ""
-			title = ""
-		end
-
-		widget:set_markup(markup.font(theme.font, markup(gray, artist) .. title))
-	end,
-})
-
 -- CPU
 local cpu = lain.widget.sysload({
 	settings = function()
-		widget:set_markup(markup.font(theme.font, markup("#00FF7C", "   ") .. load_1 .. "GHz "))
+		widget:set_markup(markup.font(theme.font, markup("#00FF7C", "  " .. load_1 .. "GHz ")))
 	end,
 })
 
 -- MEM
 local mem = lain.widget.mem({
 	settings = function()
-		widget:set_markup(markup.font(theme.font, markup("#FF8F00", "   ") .. mem_now.used .. "MB "))
+		widget:set_markup(markup.font(theme.font, markup("#FF8F00", " " .. mem_now.used .. "MB ")))
 	end,
 })
 
 -- /home fs
---[[ commented because it needs Gio/Glib >= 2.54
-theme.fs = lain.widget.fs({
-    partition = "/home",
-    notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = "Terminus 10.5" },
-})
---]]
+-- NOTE: This may work, get into it when you have time
+--[[ theme.fs = lain.widget.fs({
+	partition = "/home",
+	notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = theme.font },
+	settings = function()
+		local fsp = string.format(" %3.2f %s ", fs_now["/"].free, fs_now["/"].units)
+		widget:set_markup(markup.font(theme.font, markup("#FFAF00", "   " .. fsp)))
+	end,
+}) ]]
 
 -- Battery
 local bat = lain.widget.bat({
@@ -114,7 +101,7 @@ local bat = lain.widget.bat({
 		if bat_now.ac_status == 1 then
 			perc = bat_now.perc .. "%  "
 		end
-		widget:set_markup(markup.font(theme.font, markup("#FF0087", "   ") .. perc))
+		widget:set_markup(markup.font(theme.font, markup("#FF0087", "  " .. perc)))
 	end,
 })
 
@@ -126,26 +113,26 @@ local net = lain.widget.net({
 		else
 			net_state = "Off"
 		end
-		widget:set_markup(markup.font(theme.font, markup(gray, " 󰖩 ") .. net_state .. " "))
+		widget:set_markup(markup.font(theme.font, markup(gray, "󰖩 " .. net_state .. " ")))
 	end,
 })
 
 -- ALSA volume
 theme.volume = lain.widget.alsa({
 	settings = function()
-		header = "  "
+		header = " "
 		vlevel = volume_now.level
 
 		if volume_now.status == "off" then
-			header = " 󰝟 "
+			header = "󰝟 "
 		end
 
-		widget:set_markup(markup.font(theme.font, markup("#AAFF00", header) .. vlevel))
+		widget:set_markup(markup.font(theme.font, markup("#AAFF00", header .. vlevel)))
 	end,
 })
 
 -- Separators
-local first = wibox.widget.textbox(markup.font("Terminus 4", " "))
+local first = wibox.widget.textbox(markup.font(theme.font, ""))
 local spr = wibox.widget.textbox(" ")
 
 local function update_txt_layoutbox(s)
@@ -222,14 +209,15 @@ function theme.at_screen_connect(s)
 		s.mytasklist, -- Middle widget
 		{ -- Right widgets
 			layout = wibox.layout.fixed.horizontal,
-			wibox.widget.systray(),
 			spr,
+			-- theme.fs.widget,
 			cpu.widget,
 			mem.widget,
 			bat.widget,
 			net.widget,
 			theme.volume.widget,
 			mytextclock,
+			wibox.widget.systray(),
 		},
 	})
 end

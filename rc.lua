@@ -368,14 +368,6 @@ globalkeys = mytable.join(
 		end
 	end, { description = "toggle wibox", group = "awesome" }),
 
-	-- On-the-fly useless gaps change
-	awful.key({ altkey, "Control" }, "+", function()
-		lain.util.useless_gaps_resize(1)
-	end, { description = "increment useless gaps", group = "tag" }),
-	awful.key({ altkey, "Control" }, "-", function()
-		lain.util.useless_gaps_resize(-1)
-	end, { description = "decrement useless gaps", group = "tag" }),
-
 	-- Dynamic tagging
 	awful.key({ modkey, "Shift" }, "n", function()
 		lain.util.add_tag()
@@ -542,7 +534,7 @@ globalkeys = mytable.join(
     --]]
 	-- Prompt
 	awful.key({ modkey }, "r", function()
-		os.execute(string.format("rofi -show %s", "drun"))
+		os.execute(string.format("rofi -show %s -show-icons", "drun"))
 	end, { group = "launcher" }),
 
 	awful.key({ modkey }, "x", function()
