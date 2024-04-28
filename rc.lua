@@ -815,6 +815,7 @@ autorunApps = {
 	"blueman-applet",
 	"nm-applet",
 	"nitrogen --restore",
+	"ibus-daemon -drx",
 }
 if autorun then
 	for app = 1, #autorunApps do
