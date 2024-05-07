@@ -11,7 +11,7 @@ local theme = {}
 theme.zenburn_dir = require("awful.util").get_themes_dir() .. "theme"
 theme.dir = os.getenv("HOME") .. "~/.config/awesome/themes/theme"
 theme.font = "JetBrainsMono Nerd Font 14"
-theme.fg_normal = "#ae5cc4"
+theme.fg_normal = "#568b91"
 theme.fg_focus = "#d88166"
 theme.fg_urgent = "#CC9393"
 theme.bg_normal = "#000000"
@@ -49,7 +49,6 @@ theme.layout_txt_termfair = "[termfair]"
 theme.layout_txt_centerfair = "[centerfair]"
 
 local markup = lain.util.markup
-local gray = "#94928F"
 
 -- Textclock
 local mytextclock = wibox.widget.textclock(" %H:%M ")
@@ -68,14 +67,14 @@ theme.cal = lain.widget.cal({
 -- CPU
 local cpu = lain.widget.sysload({
 	settings = function()
-		widget:set_markup(markup.font(theme.font, markup("#00FF7C", "  " .. load_1 .. "GHz ")))
+		widget:set_markup(markup.font(theme.font, markup("#00FF7C", "  ") .. load_1 .. "GHz "))
 	end,
 })
 
 -- MEM
 local mem = lain.widget.mem({
 	settings = function()
-		widget:set_markup(markup.font(theme.font, markup("#FF8F00", " " .. mem_now.used .. "MB ")))
+		widget:set_markup(markup.font(theme.font, markup("#FF8F00", " ") .. mem_now.used .. "MB "))
 	end,
 })
 
@@ -104,20 +103,21 @@ local bat = lain.widget.bat({
 -- Net checker
 local net = lain.widget.net({
 	settings = function()
+		local net_state = "Off"
 		if net_now.state == "up" then
 			net_state = "On"
 		else
 			net_state = "Off"
 		end
-		widget:set_markup(markup.font(theme.font, markup(gray, "󰖩 " .. net_state .. " ")))
+		widget:set_markup(markup.font(theme.font, "󰖩 " .. net_state .. " "))
 	end,
 })
 
 -- ALSA volume
 theme.volume = lain.widget.alsa({
 	settings = function()
-		header = " "
-		vlevel = volume_now.level
+		local header = " "
+		local vlevel = volume_now.level
 
 		if volume_now.status == "off" then
 			header = "󰝟 "
@@ -187,32 +187,29 @@ function theme.at_screen_connect(s)
 	s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons)
 
 	-- Create the wibox
-	s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(25) })
+	s.mywibox1 = awful.wibar({ position = "top", screen = s, height = dpi(25) })
 
 	-- Add widgets to the wibox
-	s.mywibox:setup({
+	s.mywibox1:setup({
 		layout = wibox.layout.align.horizontal,
-		{ -- Left widgets
+		{
 			layout = wibox.layout.fixed.horizontal,
 			first,
 			s.mytaglist,
 			spr,
 			s.mytxtlayoutbox,
-			--spr,
 			s.mypromptbox,
 			spr,
 		},
-		s.mytasklist, -- Middle widget
-		{ -- Right widgets
+		s.mytasklist,
+		{
 			layout = wibox.layout.fixed.horizontal,
-			spr,
-			-- theme.fs.widget,
+			mytextclock,
+			bat.widget,
+			theme.volume.widget,
 			cpu.widget,
 			mem.widget,
-			bat.widget,
 			net.widget,
-			theme.volume.widget,
-			mytextclock,
 			wibox.widget.systray(),
 		},
 	})

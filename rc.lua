@@ -77,7 +77,7 @@ local editor = os.getenv("EDITOR") or "nvim"
 local browser = "brave-browser"
 
 awful.util.terminal = terminal
-awful.util.tagnames = { " Code", " Web", "󰭻 Chat", "󰙨 Test", "󰎄 Music", " Other" }
+awful.util.tagnames = { " ", " ", "󰭻 ", "󰙨 ", "󰊻 ", "󰒱 ", "󰎄 ", " " }
 awful.layout.layouts = {
 	awful.layout.suit.floating,
 	awful.layout.suit.tile,
