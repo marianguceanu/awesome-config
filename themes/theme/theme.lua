@@ -129,13 +129,15 @@ theme.volume = lain.widget.alsa({
 
 -- Separators
 local first = wibox.widget.textbox(markup.font(theme.font, ""))
-local spr = wibox.widget.textbox(" ")
+local spr = wibox.widget.textbox("   ")
 
 local function update_txt_layoutbox(s)
 	-- Writes a string representation of the current layout in a textbox widget
 	local txt_l = theme["layout_txt_" .. awful.layout.getname(awful.layout.get(s))] or ""
 	s.mytxtlayoutbox:set_text(txt_l)
 end
+
+local fs_widget = require("widgets.fs")
 
 function theme.at_screen_connect(s)
 	-- Quake application
@@ -205,6 +207,8 @@ function theme.at_screen_connect(s)
 		{
 			layout = wibox.layout.fixed.horizontal,
 			mytextclock,
+			fs_widget({ mounts = { "/home" } }),
+			spr,
 			bat.widget,
 			theme.volume.widget,
 			cpu.widget,
