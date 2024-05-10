@@ -77,7 +77,8 @@ local editor = os.getenv("EDITOR") or "nvim"
 local browser = "brave-browser"
 
 awful.util.terminal = terminal
-awful.util.tagnames = { " ", " ", "󰭻 ", "󰙨 ", "󰊻 ", "󰒱 ", "󰎄 ", " " }
+awful.util.tagnames =
+	{ " Code", " Web", "󰭻 Chat", "󰙨Test", "󰊻 Teams", "󰒱 Slack", "󰎄 Music", " Other" }
 awful.layout.layouts = {
 	awful.layout.suit.floating,
 	awful.layout.suit.tile,
@@ -157,11 +158,6 @@ awful.util.tasklist_buttons = mytable.join(
 
 beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), chosen_theme))
 
--- }}}
-
--- {{{ Menu
-
--- Create a launcher widget and a main menu
 local myawesomemenu = {
 	{
 		"Hotkeys",

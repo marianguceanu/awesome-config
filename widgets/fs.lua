@@ -18,10 +18,10 @@ config.refresh_rate = 60
 
 -- wibar widget
 config.widget_width = 40
-config.widget_bar_color = "#aaaaaa"
-config.widget_onclick_bg = "#ff0000"
-config.widget_border_color = "#535d6c66"
-config.widget_background_color = "#22222233"
+config.widget_bar_color = "#000000"
+config.widget_onclick_bg = "#d88166"
+config.widget_border_color = "#222333"
+config.widget_background_color = "#34B7EB"
 
 -- popup
 config.popup_bg = "#222333"

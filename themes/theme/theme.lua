@@ -10,8 +10,8 @@ local my_table = awful.util.table or gears.table
 local theme = {}
 theme.zenburn_dir = require("awful.util").get_themes_dir() .. "theme"
 theme.dir = os.getenv("HOME") .. "~/.config/awesome/themes/theme"
-theme.font = "JetBrainsMono Nerd Font 14"
-theme.fg_normal = "#568b91"
+theme.font = "Mononoki Nerd Font 15"
+theme.fg_normal = "#8451b8"
 theme.fg_focus = "#d88166"
 theme.fg_urgent = "#CC9393"
 theme.bg_normal = "#000000"
@@ -50,13 +50,17 @@ theme.layout_txt_centerfair = "[centerfair]"
 
 local markup = lain.util.markup
 
--- Textclock
-local mytextclock = wibox.widget.textclock(" %H:%M ")
-mytextclock.font = theme.font
+-- Date
+local date = wibox.widget.textclock("  :%a-%d-%B ")
+date.font = theme.font
+
+-- Clock
+local clock = wibox.widget.textclock("  :%H:%M ")
+clock.font = theme.font
 
 -- Calendar
 theme.cal = lain.widget.cal({
-	attach_to = { mytextclock },
+	attach_to = { date },
 	notification_preset = {
 		font = theme.font,
 		fg = theme.fg_normal,
@@ -67,32 +71,21 @@ theme.cal = lain.widget.cal({
 -- CPU
 local cpu = lain.widget.sysload({
 	settings = function()
-		widget:set_markup(markup.font(theme.font, markup("#00FF7C", "  ") .. load_1 .. "GHz "))
+		widget:set_markup(markup.font(theme.font, markup("#00FF7C", " " .. load_1 .. "GHz")))
 	end,
 })
 
 -- MEM
 local mem = lain.widget.mem({
 	settings = function()
-		widget:set_markup(markup.font(theme.font, markup("#FF8F00", " ") .. mem_now.used .. "MB "))
+		widget:set_markup(markup.font(theme.font, markup("#FF8F00", "  " .. mem_now.used .. "MB")))
 	end,
 })
-
--- /home fs
--- NOTE: This may work, get into it when you have time
---[[ theme.fs = lain.widget.fs({
-	partition = "/home",
-	notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = theme.font },
-	settings = function()
-		local fsp = string.format(" %3.2f %s ", fs_now["/"].free, fs_now["/"].units)
-		widget:set_markup(markup.font(theme.font, markup("#FFAF00", "   " .. fsp)))
-	end,
-}) ]]
 
 -- Battery
 local bat = lain.widget.bat({
 	settings = function()
-		local perc = bat_now.perc .. "% "
+		local perc = bat_now.perc .. "%"
 		if bat_now.ac_status == 1 then
 			perc = bat_now.perc .. "%  "
 		end
@@ -101,26 +94,26 @@ local bat = lain.widget.bat({
 })
 
 -- Net checker
-local net = lain.widget.net({
-	settings = function()
-		local net_state = "Off"
-		if net_now.state == "up" then
-			net_state = "On"
-		else
-			net_state = "Off"
-		end
-		widget:set_markup(markup.font(theme.font, "󰖩 " .. net_state .. " "))
-	end,
-})
+-- local net = lain.widget.net({
+-- 	settings = function()
+-- 		local net_state = "Off"
+-- 		if net_now.state == "up" then
+-- 			net_state = "On"
+-- 		else
+-- 			net_state = "Off"
+-- 		end
+-- 		widget:set_markup(markup.font(theme.font, "󰖩 " .. net_state .. " "))
+-- 	end,
+-- })
 
 -- ALSA volume
 theme.volume = lain.widget.alsa({
 	settings = function()
-		local header = " "
+		local header = "  "
 		local vlevel = volume_now.level
 
 		if volume_now.status == "off" then
-			header = "󰝟 "
+			header = " 󰝟 "
 		end
 
 		widget:set_markup(markup.font(theme.font, markup("#AAFF00", header .. vlevel)))
@@ -129,7 +122,8 @@ theme.volume = lain.widget.alsa({
 
 -- Separators
 local first = wibox.widget.textbox(markup.font(theme.font, ""))
-local spr = wibox.widget.textbox("   ")
+local spr = wibox.widget.textbox("||")
+local empty_spr = wibox.widget.textbox("   ")
 
 local function update_txt_layoutbox(s)
 	-- Writes a string representation of the current layout in a textbox widget
@@ -137,7 +131,9 @@ local function update_txt_layoutbox(s)
 	s.mytxtlayoutbox:set_text(txt_l)
 end
 
+-- Filesystem
 local fs_widget = require("widgets.fs")
+local fs_prompt = wibox.widget.textbox(markup.font(theme.font, markup("#34B7EB", " :")))
 
 function theme.at_screen_connect(s)
 	-- Quake application
@@ -188,11 +184,12 @@ function theme.at_screen_connect(s)
 	-- Create a tasklist widget
 	s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons)
 
-	-- Create the wibox
-	s.mywibox1 = awful.wibar({ position = "top", screen = s, height = dpi(25) })
+	-- Create the wiboxes
+	s.mywiboxtop = awful.wibar({ position = "top", screen = s, height = dpi(25) })
+	s.mywiboxbot = awful.wibar({ position = "bottom", screen = s, height = dpi(25) })
 
 	-- Add widgets to the wibox
-	s.mywibox1:setup({
+	s.mywiboxtop:setup({
 		layout = wibox.layout.align.horizontal,
 		{
 			layout = wibox.layout.fixed.horizontal,
@@ -203,18 +200,49 @@ function theme.at_screen_connect(s)
 			s.mypromptbox,
 			spr,
 		},
+		nil,
+		{
+			layout = wibox.layout.fixed.horizontal,
+			fs_prompt,
+			fs_widget({ mounts = { "/home" } }),
+			empty_spr,
+			spr,
+			empty_spr,
+
+			bat.widget,
+			empty_spr,
+			spr,
+			empty_spr,
+
+			theme.volume.widget,
+			empty_spr,
+			spr,
+			empty_spr,
+
+			cpu.widget,
+			empty_spr,
+			spr,
+			empty_spr,
+
+			mem.widget,
+			empty_spr,
+			spr,
+			empty_spr,
+
+			wibox.widget.systray(),
+		},
+	})
+	s.mywiboxbot:setup({
+		layout = wibox.layout.align.horizontal,
+		{
+			layout = wibox.layout.fixed.horizontal,
+		},
 		s.mytasklist,
 		{
 			layout = wibox.layout.fixed.horizontal,
-			mytextclock,
-			fs_widget({ mounts = { "/home" } }),
+			date,
 			spr,
-			bat.widget,
-			theme.volume.widget,
-			cpu.widget,
-			mem.widget,
-			net.widget,
-			wibox.widget.systray(),
+			clock,
 		},
 	})
 end
