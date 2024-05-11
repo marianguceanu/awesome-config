@@ -805,7 +805,7 @@ client.connect_signal("unmanage", backham)
 -- ensure there is always a selected client during tag switching or logins
 tag.connect_signal("property::selected", backham)
 
--- Autorun programs
+awful.spawn.with_shell("~/.config/awesome/monitor.sh")
 autorun = true
 autorunApps = {
 	"blueman-applet",
@@ -818,5 +818,3 @@ if autorun then
 		awful.util.spawn(autorunApps[app])
 	end
 end
-
--- }}}

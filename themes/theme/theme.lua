@@ -4,12 +4,9 @@ local awful = require("awful")
 local wibox = require("wibox")
 local dpi = require("beautiful.xresources").apply_dpi
 
-local os = os
 local my_table = awful.util.table or gears.table
 
 local theme = {}
-theme.zenburn_dir = require("awful.util").get_themes_dir() .. "theme"
-theme.dir = os.getenv("HOME") .. "~/.config/awesome/themes/theme"
 theme.font = "Mononoki Nerd Font 15"
 theme.fg_normal = "#8451b8"
 theme.fg_focus = "#d88166"
@@ -122,7 +119,7 @@ theme.volume = lain.widget.alsa({
 
 -- Separators
 local first = wibox.widget.textbox(markup.font(theme.font, ""))
-local spr = wibox.widget.textbox("||")
+local spr = wibox.widget.textbox(markup.font("Mononoki Nerd Font 11", " "))
 local empty_spr = wibox.widget.textbox("   ")
 
 local function update_txt_layoutbox(s)
