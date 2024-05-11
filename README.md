@@ -4,7 +4,7 @@ Config I wrote for the Awesome Window Manager for Linux-based OS's.
 ## Installation
 There will soon be an installation script for all this that I should test, but until then, you need the following packages:
 - `awesome`
-- `terminal` || This is your choice, but I recommend `alacritty`, you just have to build it from source
+- `terminal` || This is your choice, but I recommend `alacritty`, you just have to build it from source and not change the config
 - `rofi`
 - `blueman`
 - `pavucontrol`
@@ -12,10 +12,10 @@ There will soon be an installation script for all this that I should test, but u
 - `lxappearance`
 - `brightnessctl`
 - `amixer`
-- `arandr` or `xrandr` if you prefer the command line
+- `arandr` or `xrandr` if you prefer the command line (script included in config)
 - `evolution` || calendar application 
 - `nitrogen` || wallpaper
-- `A nerd font of your choice, if you install JetBrainsMono Nerd Font it should work out of the box`
+- `A nerd font of your choice, if you install Mononoki Nerd Font it should work out of the box`
 
 You can install these packages with the following command:
 ```bash
