@@ -78,18 +78,18 @@ local browser = "brave-browser"
 
 awful.util.terminal = terminal
 awful.util.tagnames =
-	{ " Code", " Web", "󰭻 Chat", "󰙨Test", "󰊻 Teams", "󰒱 Slack", "󰎄 Music", " Other" }
+	{ " Code", " Web", "󰊻 Teams", "󰒱 Slack", "󰭻 Chat", "󰙨Test", "󰎄 Music", " Other" }
 awful.layout.layouts = {
 	awful.layout.suit.floating,
 	awful.layout.suit.tile,
 	awful.layout.suit.tile.left,
 	awful.layout.suit.tile.bottom,
 	awful.layout.suit.tile.top,
+	awful.layout.suit.max,
 	--awful.layout.suit.fair,
 	--awful.layout.suit.fair.horizontal,
 	--awful.layout.suit.spiral,
 	--awful.layout.suit.spiral.dwindle,
-	--awful.layout.suit.max,
 	--awful.layout.suit.max.fullscreen,
 	--awful.layout.suit.magnifier,
 	--awful.layout.suit.corner.nw,
@@ -377,7 +377,9 @@ globalkeys = mytable.join(
 		awful.spawn(terminal)
 	end, { description = "open a terminal", group = "launcher" }),
 	awful.key({ modkey, "Control" }, "r", awesome.restart, { description = "reload awesome", group = "awesome" }),
-	awful.key({ modkey, "Shift" }, "q", awesome.quit, { description = "quit awesome", group = "awesome" }),
+	awful.key({ modkey, "Shift" }, "q", function()
+		awful.spawn("wlogout")
+	end),
 
 	awful.key({ modkey, altkey }, "l", function()
 		awful.tag.incmwfact(0.05)
@@ -464,35 +466,6 @@ globalkeys = mytable.join(
 		beautiful.volume.update()
 	end, { description = "volume 0%", group = "hotkeys" }),
 
-	-- MPD control
-	awful.key({ altkey, "Control" }, "Up", function()
-		os.execute("mpc toggle")
-		beautiful.mpd.update()
-	end, { description = "mpc toggle", group = "widgets" }),
-	awful.key({ altkey, "Control" }, "Down", function()
-		os.execute("mpc stop")
-		beautiful.mpd.update()
-	end, { description = "mpc stop", group = "widgets" }),
-	awful.key({ altkey, "Control" }, "Left", function()
-		os.execute("mpc prev")
-		beautiful.mpd.update()
-	end, { description = "mpc prev", group = "widgets" }),
-	awful.key({ altkey, "Control" }, "Right", function()
-		os.execute("mpc next")
-		beautiful.mpd.update()
-	end, { description = "mpc next", group = "widgets" }),
-	awful.key({ altkey }, "0", function()
-		local common = { text = "MPD widget ", position = "top_middle", timeout = 2 }
-		if beautiful.mpd.timer.started then
-			beautiful.mpd.timer:stop()
-			common.text = common.text .. lain.util.markup.bold("OFF")
-		else
-			beautiful.mpd.timer:start()
-			common.text = common.text .. lain.util.markup.bold("ON")
-		end
-		naughty.notify(common)
-	end, { description = "mpc on/off", group = "widgets" }),
-
 	-- Copy primary to clipboard (terminals to gtk)
 	awful.key({ modkey }, "c", function()
 		awful.spawn.with_shell("xsel | xsel -i -b")
@@ -507,28 +480,6 @@ globalkeys = mytable.join(
 		awful.spawn(browser)
 	end, { description = "run browser", group = "launcher" }),
 
-	-- Default
-	--[[ Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"}),
-    --]]
-	--[[ dmenu
-    awful.key({ modkey }, "x", function ()
-            os.execute(string.format("dmenu_run -i -fn 'Monospace' -nb '%s' -nf '%s' -sb '%s' -sf '%s'",
-            beautiful.bg_normal, beautiful.fg_normal, beautiful.bg_focus, beautiful.fg_focus))
-        end,
-        {description = "show dmenu", group = "launcher"}),
-    --]]
-	-- alternatively use rofi, a dmenu-like application with more features
-	-- check https://github.com/DaveDavenport/rofi for more details
-	--[[ rofi
-    awful.key({ modkey }, "x", function ()
-            os.execute(string.format("rofi -show %s -theme %s",
-            'run', 'dmenu'))
-        end,
-        {description = "show rofi", group = "launcher"}),
-    --]]
-	-- Prompt
 	awful.key({ modkey }, "r", function()
 		os.execute(string.format("rofi -show %s -show-icons", "drun"))
 	end, { group = "launcher" }),

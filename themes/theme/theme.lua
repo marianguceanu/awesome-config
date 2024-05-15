@@ -8,11 +8,11 @@ local my_table = awful.util.table or gears.table
 
 local theme = {}
 theme.font = "Mononoki Nerd Font 15"
-theme.fg_normal = "#8451b8"
+theme.fg_normal = "#5f849c"
 theme.fg_focus = "#d88166"
 theme.fg_urgent = "#CC9393"
 theme.bg_normal = "#000000"
-theme.bg_focus = "#0F0F0F"
+theme.bg_focus = "#000000"
 theme.bg_urgent = "#2a1f1e"
 theme.border_width = dpi(1)
 theme.border_normal = "#302627"
@@ -22,7 +22,7 @@ theme.taglist_fg_focus = "#d88166"
 theme.tasklist_bg_focus = "#1c2024"
 theme.tasklist_bg_normal = "#0F0F0F"
 theme.tasklist_fg_focus = "#d88166"
-theme.tasklist_fg_normal = "#d88166"
+theme.tasklist_fg_normal = "#5f849c"
 theme.menu_height = dpi(20)
 theme.menu_width = dpi(200)
 theme.layout_txt_tile = "[t]"
@@ -39,7 +39,7 @@ theme.layout_txt_magnifier = "[M]"
 theme.layout_txt_floating = "[|]"
 theme.tasklist_plain_task_name = true
 theme.tasklist_disable_icon = false
-theme.useless_gap = dpi(5)
+theme.useless_gap = dpi(2)
 
 -- lain related
 theme.layout_txt_termfair = "[termfair]"
@@ -47,17 +47,13 @@ theme.layout_txt_centerfair = "[centerfair]"
 
 local markup = lain.util.markup
 
--- Date
-local date = wibox.widget.textclock("  :%a-%d-%B ")
-date.font = theme.font
-
 -- Clock
-local clock = wibox.widget.textclock("  :%H:%M ")
+local clock = wibox.widget.textclock("  %H:%M  %a-%d-%B ")
 clock.font = theme.font
 
 -- Calendar
 theme.cal = lain.widget.cal({
-	attach_to = { date },
+	attach_to = { clock },
 	notification_preset = {
 		font = theme.font,
 		fg = theme.fg_normal,
@@ -197,21 +193,21 @@ function theme.at_screen_connect(s)
 			s.mypromptbox,
 			spr,
 		},
-		nil,
+		wibox.container.place(clock, "center"),
 		{
 			layout = wibox.layout.fixed.horizontal,
-			fs_prompt,
-			fs_widget({ mounts = { "/home" } }),
-			empty_spr,
-			spr,
-			empty_spr,
-
 			bat.widget,
 			empty_spr,
 			spr,
 			empty_spr,
 
 			theme.volume.widget,
+			empty_spr,
+			spr,
+			empty_spr,
+
+			fs_prompt,
+			fs_widget({ mounts = { "/home" } }),
 			empty_spr,
 			spr,
 			empty_spr,
@@ -237,9 +233,6 @@ function theme.at_screen_connect(s)
 		s.mytasklist,
 		{
 			layout = wibox.layout.fixed.horizontal,
-			date,
-			spr,
-			clock,
 		},
 	})
 end
