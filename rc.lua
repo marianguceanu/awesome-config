@@ -77,15 +77,14 @@ local editor = os.getenv("EDITOR") or "nvim"
 local browser = "brave-browser"
 
 awful.util.terminal = terminal
-awful.util.tagnames =
-	{ " Code", " Web", "󰊻 Teams", "󰒱 Slack", "󰭻 Chat", "󰙨Test", "󰎄 Music", " Other" }
+awful.util.tagnames = { " ", " ", "󰊻 ", "󰒱 ", "󰭻 ", "󰙨 ", "󱝠 ", " " }
 awful.layout.layouts = {
+	awful.layout.suit.max,
 	awful.layout.suit.floating,
 	awful.layout.suit.tile,
-	awful.layout.suit.tile.left,
-	awful.layout.suit.tile.bottom,
-	awful.layout.suit.tile.top,
-	awful.layout.suit.max,
+	--awful.layout.suit.tile.left,
+	--awful.layout.suit.tile.bottom,
+	--awful.layout.suit.tile.top,
 	--awful.layout.suit.fair,
 	--awful.layout.suit.fair.horizontal,
 	--awful.layout.suit.spiral,
@@ -377,9 +376,6 @@ globalkeys = mytable.join(
 		awful.spawn(terminal)
 	end, { description = "open a terminal", group = "launcher" }),
 	awful.key({ modkey, "Control" }, "r", awesome.restart, { description = "reload awesome", group = "awesome" }),
-	awful.key({ modkey, "Shift" }, "q", function()
-		awful.spawn("wlogout")
-	end),
 
 	awful.key({ modkey, altkey }, "l", function()
 		awful.tag.incmwfact(0.05)
@@ -485,12 +481,7 @@ globalkeys = mytable.join(
 	end, { group = "launcher" }),
 
 	awful.key({ modkey }, "x", function()
-		awful.prompt.run({
-			prompt = "Run Lua code: ",
-			textbox = awful.screen.focused().mypromptbox.widget,
-			exe_callback = awful.util.eval,
-			history_path = awful.util.get_cache_dir() .. "/history_eval",
-		})
+		awful.spawn("wlogout")
 	end, { description = "lua execute prompt", group = "awesome" })
 	--]]
 )

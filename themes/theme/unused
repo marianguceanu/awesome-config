@@ -1,0 +1,24 @@
+-- CPU
+-- local cpu = lain.widget.sysload({
+-- 	settings = function()
+-- 		widget:set_markup(markup.font(theme.font, markup("#00FF7C", " " .. load_1 .. "GHz")))
+-- 	end,
+-- })
+-- MEM
+-- local mem = lain.widget.mem({
+-- 	settings = function()
+-- 		widget:set_markup(markup.font(theme.font, markup("#FF8F00", "  " .. mem_now.used .. "MB")))
+-- 	end,
+-- })
+-- Net checker
+-- local net = lain.widget.net({
+-- 	settings = function()
+-- 		local net_state = "Off"
+-- 		if net_now.state == "up" then
+-- 			net_state = "On"
+-- 		else
+-- 			net_state = "Off"
+-- 		end
+-- 		widget:set_markup(markup.font(theme.font, "󰖩 " .. net_state .. " "))
+-- 	end,
+-- })
