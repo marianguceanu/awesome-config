@@ -270,7 +270,7 @@ globalkeys = mytable.join(
 
 	-- X screen locker
 	awful.key({ altkey, "Control" }, "l", function()
-		os.execute("i3lock -e -i ~/Pictures/wallpapers/lockscreen.png")
+		os.execute("betterlockscreen -l")
 	end, { description = "lock screen", group = "hotkeys" }),
 
 	-- Show help
