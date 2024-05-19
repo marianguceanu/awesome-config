@@ -15,9 +15,10 @@ There will soon be an installation script for all this that I should test, but u
 - `arandr` or `xrandr` if you prefer the command line (script included in config)
 - `evolution` || calendar application 
 - `nitrogen` || wallpaper
+- `betterlockscreen` || This will require `i3lock` and `i3lock-color` to be installed
 - `A nerd font of your choice, if you install Mononoki Nerd Font it should work out of the box`
 
-You can install these packages with the following command:
+You can install some of these packages with the following command:
 ```bash
 # The package manager is, in the most cases, either apt, pacman, or dnf, depending on your distro
 sudo <package_manager_install_command> awesome alacritty rofi blueman pavucontrol network-manager lxappearance brightnessctl amixer
