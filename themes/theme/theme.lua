@@ -27,7 +27,7 @@ theme.border_marked = "#CC9393"
 theme.taglist_fg_focus = active
 theme.tasklist_bg_focus = black
 theme.tasklist_bg_normal = black
-theme.tasklist_fg_focus = active
+theme.tasklist_fg_focus = white
 theme.tasklist_fg_normal = gray
 theme.menu_height = dpi(20)
 theme.menu_width = dpi(200)
@@ -67,51 +67,54 @@ theme.cal = lain.widget.cal({
 	},
 })
 
+local function icon_util(perc)
+	local conv_perc = tonumber(perc)
+	if conv_perc == nil then
+		conv_perc = 0
+	end
+	local perc_as_num = math.floor(conv_perc)
+	if perc_as_num == 100 then
+		return "󰁹:"
+	end
+	if perc_as_num >= 90 then
+		return "󰂂:"
+	end
+	if perc_as_num >= 80 then
+		return "󰂁:"
+	end
+	if perc_as_num >= 70 then
+		return "󰂀:"
+	end
+	if perc_as_num >= 60 then
+		return "󰁿:"
+	end
+	if perc_as_num >= 50 then
+		return "󰁾:"
+	end
+	if perc_as_num >= 40 then
+		return "󰁽:"
+	end
+	if perc_as_num >= 30 then
+		return "󰁼:"
+	end
+	if perc_as_num >= 20 then
+		return "󰁻:"
+	end
+	if perc_as_num >= 10 then
+		return "󰁺:"
+	end
+	return "󰂄:"
+end
+
 -- Battery
 local bat = lain.widget.bat({
 	settings = function()
 		local perc = bat_now.perc
-		local icon = "󰂄:"
-		local conv_perc = tonumber(bat_now.perc)
-		if conv_perc == nil then
-			conv_perc = 0
-		end
-		local perc_as_num = math.floor(conv_perc)
-		if perc_as_num == 100 then
-			icon = "󰁹:"
-		end
-		if perc_as_num >= 90 then
-			icon = "󰂂:"
-		end
-		if perc_as_num >= 80 then
-			icon = "󰂁:"
-		end
-		if perc_as_num >= 70 then
-			icon = "󰂀:"
-		end
-		if perc_as_num >= 60 then
-			icon = "󰁿:"
-		end
-		if perc_as_num >= 50 then
-			icon = "󰁾:"
-		end
-		if perc_as_num >= 40 then
-			icon = "󰁽:"
-		end
-		if perc_as_num >= 30 then
-			icon = "󰁼:"
-		end
-		if perc_as_num >= 20 then
-			icon = "󰁻:"
-		end
-		if perc_as_num >= 10 then
-			icon = "󰁺:"
-		end
-
+		local icon = icon_util(perc)
 		if bat_now.ac_status == 1 then
 			icon = "󰂄:"
 		end
-		widget:set_markup(markup.font(theme.font, markup("#FF0087", " " .. icon .. perc .. "%")))
+		widget:set_markup(markup.font(theme.font, markup("#FF0087", icon .. perc .. "%")))
 	end,
 })
 
@@ -212,6 +215,8 @@ function theme.at_screen_connect(s)
 		s.mytasklist,
 		{
 			layout = wibox.layout.fixed.horizontal,
+			spr,
+
 			bat.widget,
 			spr,
 

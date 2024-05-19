@@ -77,7 +77,7 @@ local editor = os.getenv("EDITOR") or "nvim"
 local browser = "brave-browser"
 
 awful.util.terminal = terminal
-awful.util.tagnames = { " ", " ", "󰊻 ", "󰒱 ", "󰭻 ", "󰙨 ", "󱝠 ", " " }
+awful.util.tagnames = { " Code ", " Web  ", "󰊻 Teams", "󰭻 Chat ", "󰙨 Test ", "󱝠 Music", " Other" }
 awful.layout.layouts = {
 	awful.layout.suit.max,
 	awful.layout.suit.floating,
@@ -343,15 +343,11 @@ globalkeys = mytable.join(
 	end, { description = "focus the previous screen", group = "screen" }),
 	awful.key({ modkey }, "u", awful.client.urgent.jumpto, { description = "jump to urgent client", group = "client" }),
 	awful.key({ modkey }, "Tab", function()
-		if cycle_prev then
-			awful.client.focus.history.previous()
-		else
-			awful.client.focus.byidx(-1)
-		end
-		if client.focus then
-			client.focus:raise()
-		end
-	end, { description = "cycle with previous/go back", group = "client" }),
+		awful.client.focus.byidx(1)
+	end, { description = "cycle between tabs increasingly", group = "client" }),
+	awful.key({ modkey, "Shift" }, "Tab", function()
+		awful.client.focus.byidx(-1)
+	end, { description = "cycle between tabs decreasingly", group = "client" }),
 
 	-- Show/hide wibox
 	awful.key({ modkey }, "b", function()
@@ -377,10 +373,10 @@ globalkeys = mytable.join(
 	end, { description = "open a terminal", group = "launcher" }),
 	awful.key({ modkey, "Control" }, "r", awesome.restart, { description = "reload awesome", group = "awesome" }),
 
-	awful.key({ modkey, altkey }, "l", function()
+	awful.key({ modkey, "Control" }, "l", function()
 		awful.tag.incmwfact(0.05)
 	end, { description = "increase master width factor", group = "layout" }),
-	awful.key({ modkey, altkey }, "h", function()
+	awful.key({ modkey, "Control" }, "h", function()
 		awful.tag.incmwfact(-0.05)
 	end, { description = "decrease master width factor", group = "layout" }),
 	awful.key({ modkey, "Shift" }, "h", function()
