@@ -748,6 +748,7 @@ autorunApps = {
 	"nm-applet",
 	"nitrogen --restore",
 	"ibus-daemon -drx",
+	"picom",
 }
 if autorun then
 	for app = 1, #autorunApps do

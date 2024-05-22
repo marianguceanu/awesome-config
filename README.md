@@ -16,6 +16,7 @@ There will soon be an installation script for all this that I should test, but u
 - `evolution` || calendar application 
 - `nitrogen` || wallpaper
 - `betterlockscreen` || This will require `i3lock` and `i3lock-color` to be installed
+- `picom` || compositor
 - `A nerd font of your choice, if you install Mononoki Nerd Font it should work out of the box`
 
 You can install some of these packages with the following command:
