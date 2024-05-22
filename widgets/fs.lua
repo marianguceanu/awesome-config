@@ -21,14 +21,14 @@ config.widget_width = 40
 config.widget_bar_color = "#000000"
 config.widget_onclick_bg = "#d88166"
 config.widget_border_color = "#222333"
-config.widget_background_color = "#34B7EB"
+config.widget_background_color = "#FFFFFF"
 
 -- popup
-config.popup_bg = "#222333"
+config.popup_bg = "#00000033"
 config.popup_border_width = 1
 config.popup_border_color = "#535d6c66"
 config.popup_bar_color = "#aaaaaa"
-config.popup_bar_background_color = "#22222233"
+config.popup_bar_background_color = "#222222"
 config.popup_bar_border_color = "#535d6c66"
 
 local function worker(user_args)

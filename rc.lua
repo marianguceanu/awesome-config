@@ -67,17 +67,15 @@ awful.spawn.with_shell(
 -- }}}
 
 -- {{{ Variable definitions
-local chosen_theme = "theme"
 local modkey = "Mod4"
 local altkey = "Mod1"
 local terminal = "alacritty"
 local vi_focus = false
-local cycle_prev = true
 local editor = os.getenv("EDITOR") or "nvim"
 local browser = "brave-browser"
 
 awful.util.terminal = terminal
-awful.util.tagnames = { " Code ", " Web  ", "󰊻 Teams", "󰭻 Chat ", "󰙨 Test ", "󱝠 Music", " Other" }
+awful.util.tagnames = { " ", " ", "󰊻 ", "󰭻 ", "󰙨 ", "󱝠 ", " " }
 awful.layout.layouts = {
 	awful.layout.suit.max,
 	awful.layout.suit.floating,
@@ -155,7 +153,7 @@ awful.util.tasklist_buttons = mytable.join(
 	end)
 )
 
-beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), chosen_theme))
+beautiful.init("~/.config/awesome/themes/theme/theme.lua")
 
 local myawesomemenu = {
 	{
@@ -229,7 +227,7 @@ screen.connect_signal("arrange", function(s)
 	local only_one = #s.tiled_clients == 1
 	for _, c in pairs(s.clients) do
 		if only_one and not c.floating or c.maximized or c.fullscreen then
-			c.border_width = 0
+			c.border_width = 2
 		else
 			c.border_width = beautiful.border_width
 		end
