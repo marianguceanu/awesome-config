@@ -4,12 +4,9 @@ local awful = require("awful")
 local wibox = require("wibox")
 local dpi = require("beautiful.xresources").apply_dpi
 
-local my_table = awful.util.table or gears.table
-
 local black = "#000000"
 local white = "#FFFFFF"
 local gray = "#575757"
-local gray2 = "#1B1B1B"
 
 local nerd_font = "Mononoki Nerd Font 14"
 
@@ -17,24 +14,25 @@ local theme = {}
 theme.font = nerd_font
 theme.fg_normal = white
 theme.fg_focus = gray
-theme.fg_urgent = "#CC9393"
+theme.fg_urgent = white
 theme.bg_normal = black
 theme.bg_focus = black
-theme.bg_urgent = "#2a1f1e"
+theme.bg_urgent = gray
 theme.border_width = dpi(2)
 theme.border_normal = gray
 theme.border_focus = white
-theme.border_marked = "#CC9393"
-theme.taglist_fg_focus = gray
-theme.tasklist_bg_focus = gray2
+theme.border_marked = gray
+theme.taglist_fg_focus = black
+theme.taglist_bg_focus = white
+theme.tasklist_bg_focus = gray
 theme.tasklist_bg_normal = black
 theme.tasklist_fg_focus = white
 theme.tasklist_fg_normal = gray
 theme.menu_height = dpi(20)
 theme.menu_width = dpi(200)
-theme.layout_tile = "~/.config/awesome/themes/theme/layouts/tilew.png"
-theme.layout_max = "~/.config/awesome/themes/theme/layouts/maxw.png"
-theme.layout_floating = "~/.config/awesome/themes/theme/layouts/floatingw.png"
+theme.layout_tile = "~/.config/awesome/theme/layouts/tilew.png"
+theme.layout_max = "~/.config/awesome/theme/layouts/maxw.png"
+theme.layout_floating = "~/.config/awesome/theme/layouts/floatingw.png"
 -- theme.layout_fairh = "~/.config/awesome/themes/theme/layouts/fairhw.png"
 -- theme.layout_fairv = "~/.config/awesome/themes/theme/layouts/fairvw.png"
 -- theme.layout_magnifier = "~/.config/awesome/themes/theme/layouts/magnifierw.png"

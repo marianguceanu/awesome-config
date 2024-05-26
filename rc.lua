@@ -71,11 +71,12 @@ local modkey = "Mod4"
 local altkey = "Mod1"
 local terminal = "alacritty"
 local vi_focus = false
-local editor = os.getenv("EDITOR") or "nvim"
+local editor = "code"
 local browser = "brave-browser"
 
 awful.util.terminal = terminal
-awful.util.tagnames = { " ", " ", "󰊻 ", "󰭻 ", "󰙨 ", "󱝠 ", " " }
+-- awful.util.tagnames = { " ", " ", "󰊻 ", "󰭻 ", "󰙨 ", "󱝠 ", " " }
+awful.util.tagnames = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
 awful.layout.layouts = {
 	awful.layout.suit.max,
 	awful.layout.suit.floating,
@@ -153,7 +154,7 @@ awful.util.tasklist_buttons = mytable.join(
 	end)
 )
 
-beautiful.init("~/.config/awesome/themes/theme/theme.lua")
+beautiful.init("~/.config/awesome/theme/theme.lua")
 
 local myawesomemenu = {
 	{
