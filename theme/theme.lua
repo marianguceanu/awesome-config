@@ -4,30 +4,31 @@ local awful = require("awful")
 local wibox = require("wibox")
 local dpi = require("beautiful.xresources").apply_dpi
 
-local black = "#000000"
-local white = "#FFFFFF"
-local gray = "#575757"
+local background = "#14161b"
+local main = "#215578"
+local gray = "#242424"
+local white = "#ffffff"
 
-local nerd_font = "Mononoki Nerd Font 14"
+local nerd_font = "Fira Sans SemiBold 14"
 
 local theme = {}
 theme.font = nerd_font
-theme.fg_normal = white
+theme.fg_normal = main
 theme.fg_focus = gray
-theme.fg_urgent = white
-theme.bg_normal = black
-theme.bg_focus = black
+theme.fg_urgent = main
+theme.bg_normal = background
+theme.bg_focus = background
 theme.bg_urgent = gray
-theme.border_width = dpi(2)
+theme.border_width = dpi(3)
 theme.border_normal = gray
-theme.border_focus = white
+theme.border_focus = main
 theme.border_marked = gray
-theme.taglist_fg_focus = black
-theme.taglist_bg_focus = white
+theme.taglist_fg_focus = white
+theme.taglist_bg_focus = main
 theme.tasklist_bg_focus = gray
-theme.tasklist_bg_normal = black
+theme.tasklist_bg_normal = background
 theme.tasklist_fg_focus = white
-theme.tasklist_fg_normal = gray
+theme.tasklist_fg_normal = main
 theme.menu_height = dpi(20)
 theme.menu_width = dpi(200)
 theme.layout_tile = "~/.config/awesome/theme/layouts/tilew.png"
@@ -178,10 +179,10 @@ function theme.at_screen_connect(s)
 	s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons)
 
 	-- Create the wiboxes
-	s.mywiboxtop = awful.wibar({ position = "top", screen = s, height = dpi(25) })
+	s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(30) })
 
 	-- Add widgets to the wibox
-	s.mywiboxtop:setup({
+	s.mywibox:setup({
 		layout = wibox.layout.align.horizontal,
 		{
 			layout = wibox.layout.fixed.horizontal,
@@ -202,7 +203,7 @@ function theme.at_screen_connect(s)
 			theme.volume.widget,
 			spr,
 
-			fs_widget({ mounts = { "/home" } }),
+			fs_widget({ mounts = { "/" } }),
 			spr,
 
 			wibox.widget.systray(),
